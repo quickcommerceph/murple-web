@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+:root {
+  --background: #030305;
+  --foreground: #e5e5e5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: #4F2CCD;
+  --font-sans: "Segoe UI", "Inter", system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: #030305;
+  color: #e5e5e5;
+  font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Selection */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030305;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Spotlight Effect */
+.spotlight-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  transition: background 0.3s;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(167, 139, 250, 0.06), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.spotlight-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(167, 139, 250, 0.4), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.spotlight-card:hover .spotlight-border {
+  opacity: 1;
+}
+
+/* Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Abstract Map Background */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+}
+
+/* Glowing Pulse */
+.glow-point {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #a78bfa;
+  border-radius: 50%;
+  box-shadow: 0 0 15px 2px rgba(167, 139, 250, 0.8);
+}
+
+.glow-point::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+/* Custom Button Gradient Border */
+.btn-gradient-border {
+  position: relative;
+  background: #000;
+  border-radius: 9999px;
+  z-index: 0;
+}
+
+.btn-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(to right, #4c1d95, #a78bfa);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* Scattered Floating Game Cards */
+.game-card-float {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.8) translateY(30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.game-card-float.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Staggered animation delays - cards appear with stagger effect */
+.game-card-float[data-delay="0"] { transition-delay: 0ms; }
+.game-card-float[data-delay="1"] { transition-delay: 100ms; }
+.game-card-float[data-delay="2"] { transition-delay: 200ms; }
+.game-card-float[data-delay="3"] { transition-delay: 300ms; }
+.game-card-float[data-delay="4"] { transition-delay: 400ms; }
+.game-card-float[data-delay="5"] { transition-delay: 500ms; }
+.game-card-float[data-delay="6"] { transition-delay: 600ms; }
+.game-card-float[data-delay="7"] { transition-delay: 700ms; }
+.game-card-float[data-delay="8"] { transition-delay: 800ms; }
+.game-card-float[data-delay="9"] { transition-delay: 900ms; }
+
+/* Hover effect - z-index 50 to ensure it's always on top */
+.game-card-float:hover {
+  transform: scale(1.05) translateY(-5px) !important;
+  box-shadow: 0 30px 60px rgba(79, 44, 205, 0.3) !important;
+  z-index: 50 !important;
+  transition-delay: 0s !important;
+}
+
+/* Mobile hover adjustments */
+@media (max-width: 768px) {
+  .game-card-float {
+    border-radius: 12px;
+  }
+  
+  .game-card-float:hover {
+    transform: scale(1.03) translateY(-3px) !important;
+  }
+}
